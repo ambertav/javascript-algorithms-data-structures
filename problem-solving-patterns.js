@@ -52,9 +52,6 @@ function same (arr1, arr2) {
         }
     }
 
-    console.log(freqCounter1);
-    console.log(freqCounter2);
-
     return true;
 }
 
@@ -103,7 +100,7 @@ function validAnagram(first, second) {
         if (!lookup[letter]) {
             return false;
         } else {
-            lookup[letter] += 1;
+            lookup[letter] -= 1;
         }
     }
 
@@ -228,3 +225,52 @@ function search (arr, val) {
     }
     return -1;
 }
+
+
+// same frequency of digits in two numbers
+function sameFrequency (int1, int2) {
+    let num1 = int1.toString();
+    let num2 = int2.toString();
+
+    if (num1.length !== num2.length) return false;
+
+    const lookup = {};
+
+    for (i = 0; i < num1.length; i++) {
+        let digit = num1[i];
+        lookup[digit] ? lookup[digit] += 1 : lookup[digit] = 1;
+    }
+
+    for (j = 0; j < num2.length; j++) {
+        let digit = num2[j];
+        if (!lookup[digit]) {
+            return false;
+        } else {
+            lookup[digit] -= 1;
+        }
+    }
+    return true;
+}
+
+
+// are there duplicates, variable number of arguments
+function areThereDuplicates (...args) {
+    if (args.length === 0) return false;
+
+    let left = 0;
+    let right = args.length - 1;
+
+    while (left < right) {
+        if (args[left] === args[right]) return true;
+        if (args[left + 1] === args[right]) return true;
+        left++;
+        right--;
+    }
+    return false;
+}
+
+/* one line solution -- sets can't have duplicate 
+function areThereDuplicates(...args) {
+    return new Set(args).size !== args.length;
+}
+*/
