@@ -188,8 +188,9 @@ function countUniqueValues (arr) {
 // should calculate the maximum sum of n consecutive elements
 
 // O(N)
-function maxSubarraySum (arr, n) {
-    let maxSum, tempSum = 0;
+function maxSubarraySum (arr, num) {
+    let maxSum = 0;
+    let tempSum = 0;
     if (arr.length < num) return null;
     for (i = 0; i < num; i++) {
         maxSum += arr[i];
@@ -274,3 +275,69 @@ function areThereDuplicates(...args) {
     return new Set(args).size !== args.length;
 }
 */
+
+
+function averagePair (arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left < right) {
+        let avg = (arr[left] + arr[right]) / 2;
+
+        if (avg === target) {
+            return true;
+        } else if (avg < target) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return false;
+}
+
+
+function isSubsequence (first, second) {
+    const lookup = Array.from(first);
+
+}
+
+
+function maxSubarraySum (arr, int) {
+    let maxSum = 0;
+    let tempSum = 0;
+
+    if (arr.length < int) return null;
+
+    for (i = 0; i < int; i++) {
+        maxSum += arr[i];
+    }
+
+    tempSum = maxSum;
+
+    for (i = int; i < arr.length; i++) {
+        tempSum = tempSum - arr[i - int] + arr[i];
+        maxSum = Math.max(maxSum, tempSum);
+    }
+    return maxSum;
+}
+
+
+// array and int parameters are positive
+// return minimal length of contiguous subarray oh which sum is greater/equal to int passed
+// if not return 0;
+function minSubarrayLen (arr, int) {
+    let testSum = 0;
+    let tempLen = 0;
+
+    for (i = 0; i < arr.length; i++) {
+        if (testSum < int) {
+            testSum += arr[i]
+        } else if (testSum >= int) {
+            tempLen = i;
+
+        }
+        return tempLen;
+    }
+
+    return 0;
+}
