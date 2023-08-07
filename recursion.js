@@ -61,4 +61,65 @@ function collectOddsValues (arr) {
     return newArr;
 }
 
-console.log(collectOddsValues([1, 2, 3, 4, 5]));
+// console.log(collectOddsValues([1, 2, 3, 4, 5]));
+
+
+
+
+
+// problems 10-14
+// function power that acepts base and exponent, should return the power, essential replicate Math.pow()
+
+function power (base, exp) {
+    if (exp === 0) return 1;
+    return base * power(base, exp - 1);
+}
+
+// console.log(power(2,0))
+// console.log(power(2,2))
+// console.log(power(2,4))
+
+
+function factorial (num) {
+    if (num === 1 || num === 0) return 1;
+    return num * factorial(num - 1);
+}
+
+// console.log(factorial(0));
+// console.log(factorial(1));
+// console.log(factorial(2));
+// console.log(factorial(7));
+
+
+function productOfArray (arr) {
+    let product = 1;
+    if (arr.length === 0) return product;
+    product *= arr[0];
+    return product * productOfArray(arr.slice(1));
+}
+
+// less memory solution
+// function productOfArray(arr) {
+//     if(arr.length === 0) {
+//         return 1;
+//     }
+//     return arr[0] * productOfArray(arr.slice(1));
+// }
+
+// console.log(productOfArray([1, 2, 3]))
+// console.log(productOfArray([1, 2, 3, 10]))
+
+
+function recursiveRange (num) {
+    if (num === 0) return 0;
+    return num + recursiveRange(num - 1);
+}
+
+// console.log(recursiveRange(6));
+
+function fib (n) {
+    if (n <= 2) return 1;
+    return fib(n - 1) + fib(n -2);
+}
+
+// console.log(fib(4));
