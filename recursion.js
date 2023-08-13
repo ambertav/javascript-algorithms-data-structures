@@ -123,3 +123,17 @@ function fib (n) {
 }
 
 // console.log(fib(4));
+
+
+
+// exercise 15, reverse a string
+
+function reverse (string) {
+    let output = '';
+    if (output.length === string.length) return output;
+    output += string[string.length - 1];
+    output = output.concat(reverse(string.slice(0, -1)));
+    return output;
+}
+
+// console.log(reverse('hello'));
