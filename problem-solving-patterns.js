@@ -332,19 +332,46 @@ function maxSubarraySum (arr, int) {
 // array and int parameters are positive
 // return minimal length of contiguous subarray oh which sum is greater/equal to int passed
 // if not return 0;
-function minSubarrayLen (arr, int) {
-    let testSum = 0;
-    let tempLen = 0;
-
-    for (i = 0; i < arr.length; i++) {
-        if (testSum < int) {
-            testSum += arr[i]
-        } else if (testSum >= int) {
-            tempLen = i;
-
-        }
-        return tempLen;
+function minSubArrayLen (nums, sum) {
+    let total = 0;
+    let start = 0;
+    let end = 0;
+    let minLen = Infinity;
+   
+    while (start < nums.length) {
+      // if current window doesn't add up to the given sum then 
+          // move the window to right
+        if (total < sum && end < nums.length){
+            total += nums[end];
+            end++;
+      }
+      // if current window adds up to at least the sum given then
+          // we can shrink the window 
+        else if (total >= sum) {
+            minLen = Math.min(minLen, end - start);
+            total -= nums[start];
+            start++;
+      } 
+      // current total less than required total but we reach the end, need this or else we'll be in an infinite loop 
+      else break;
     }
+    return minLen === Infinity ? 0 : minLen;
+}
 
-    return 0;
+function findLongestSubstring (string) {
+    let max = 0;
+    let window = {};
+    let temp = 0;
+   
+    for (i = 0; i < string.length; i++) {
+        let char = string[i];
+        if (window[char]) {
+            temp = Math.max(temp, window[char]);
+        }
+        // index - beginning of substring + 1 (to include current in count)
+        max = Math.max(max, i - temp + 1);
+        // store the index of the next char so as to not double count
+        window[char] = i + 1;
+    }
+    return max;
 }
