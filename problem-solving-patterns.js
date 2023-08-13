@@ -283,24 +283,31 @@ function averagePair (arr, target) {
 
     while (left < right) {
         let avg = (arr[left] + arr[right]) / 2;
-
-        if (avg === target) {
-            return true;
-        } else if (avg < target) {
-            left++;
-        } else {
-            right--;
-        }
+        if (avg === target) return true;
+        else if (avg < target) left++;
+        else right--;
     }
     return false;
 }
 
-
 function isSubsequence (first, second) {
-    const lookup = Array.from(first);
-
+    let i = 0;
+    let j = 0;
+    if (!first) return true;
+    while (j < second.length) {
+        if (second[j] === first[i]) i++;
+        if (i === first.length) return true;
+        j++;
+    }
+    return false;
 }
 
+function recursiveIsSubsequence(str1, str2) {
+    if(str1.length === 0) return true;
+    if(str2.length === 0) return false;
+    if(str2[0] === str1[0]) return isSubsequence(str1.slice(1), str2.slice(1))  ;
+    return isSubsequence(str1, str2.slice(1));
+  }
 
 function maxSubarraySum (arr, int) {
     let maxSum = 0;
