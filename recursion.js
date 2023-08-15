@@ -137,3 +137,28 @@ function reverse (string) {
 }
 
 // console.log(reverse('hello'));
+
+
+// exercise 16, is palindrome
+
+function isPalindrome (string) {
+    if (string[0] === string[string.length - 1]) return true;
+    isPalindrome(string.slice(0, -1));
+    return false;
+}
+// console.log(isPalindrome('tacocat'));
+
+
+// exercise 17, checking if array has an odd
+
+function isOdd (val) {
+    return val % 2 !== 0 ? true : false;
+}
+
+function someRecursive (arr, callback) {
+    if (arr.length === 0) return false;
+    if (callback(arr[0])) return true;
+    return someRecursive(arr.slice(1), callback);
+}
+
+// console.log(someRecursive(([4,6,8], isOdd)));
