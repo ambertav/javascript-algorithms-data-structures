@@ -162,3 +162,30 @@ function someRecursive (arr, callback) {
 }
 
 // console.log(someRecursive(([4,6,8], isOdd)));
+
+
+// exercise 18, accepts array of arrays and flattens
+
+function flatten (arr) {
+    let output = [];
+    for (i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) output = output.concat(flatten(arr[i]));
+        else output.push(arr[i]);
+    }
+    return output;
+}
+
+// console.log(flatten([1, 2, 3, [4, 5]]))
+
+
+// exercise 19, capitalize first letter of each string in array
+
+function capitalizeFirst (arr) {
+    if (arr.length === 1) {
+      return [arr[0][0].toUpperCase() + arr[0].substr(1)];
+    }
+    const output = capitalizeFirst(arr.slice(0, -1));
+    const string = arr.slice(arr.length - 1)[0][0].toUpperCase() + arr.slice(arr.length-1)[0].substr(1);
+    output.push(string);
+    return output;
+}
