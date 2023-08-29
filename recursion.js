@@ -181,11 +181,51 @@ function flatten (arr) {
 // exercise 19, capitalize first letter of each string in array
 
 function capitalizeFirst (arr) {
-    if (arr.length === 1) {
-      return [arr[0][0].toUpperCase() + arr[0].substr(1)];
-    }
+    if (arr.length === 1) return [arr[0][0].toUpperCase() + arr[0].substr(1)];
     const output = capitalizeFirst(arr.slice(0, -1));
     const string = arr.slice(arr.length - 1)[0][0].toUpperCase() + arr.slice(arr.length-1)[0].substr(1);
     output.push(string);
+    return output;
+}
+
+
+// exercise 20, returns sum of all even numbers in object, which may or may not have nested objects
+function nestedEvenSum (obj, sum = 0) {
+    for (let key in obj) {
+        if (typeof obj[key] === 'object') sum += nestedEvenSum(obj[key]);
+        else if (typeof obj[key] === 'number' && obj[key] % 2 === 0)sum += obj[key];
+    }
+    return sum;
+}
+
+// exercise 21, takes array and capitalizes each string in array
+function capitalizeWords (arr) {
+    if (arr.length === 1) return [arr[0].toUpperCase()];
+    let output = capitalizeWords(arr.slice(0, -1));
+    output.push(arr.slice(arr.length -1)[0].toUpperCase());
+    return output;
+}
+
+// console.log(capitalizeWords(['hi', 'hello', 'good morning']))
+
+
+// exercise 22
+function stringifyNumbers(obj) {
+    var newObj = {};
+    for (let key in obj) {
+      if (typeof obj[key] === 'number') newObj[key] = obj[key].toString();
+      else if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) newObj[key] = stringifyNumbers(obj[key]);
+      else newObj[key] = obj[key];
+    }
+    return newObj;
+  }
+
+// exercise 23, takes object and returns array of all strings within object, which may or may not have nested objects
+function collectStrings (obj) {
+    let output = [];
+    for (let key in obj) {
+        if (typeof obj[key] === 'object') output = output.concat(collectStrings(obj[key]));
+        else if (typeof obj[key] === 'string') output.push(obj[key]);
+    }
     return output;
 }
