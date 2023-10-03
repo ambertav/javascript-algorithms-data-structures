@@ -44,8 +44,39 @@ class SinglyLinkedList{
         return current;
     }
     // implement get
-    get () {
-        
+    get (index) {
+        if (index < 0 || index >= this.length) return null;
+        let counter = 0;
+        let current = this.head;
+        while (counter !== index) {
+            current = current.next;
+            counter++;
+        }
+        return current;
+    }
+    // implement insert
+    insert (index, val) {
+        if (index < 0 || index >= this.length) return false;
+        if (index === this.length) return !!this.push(val);
+        if (index === 0) {
+            let newNode = new Node(val);
+            if (!this.head) {
+                this.head = newNode;
+                this.tail = this.head;
+            } else {
+                newNode.next = this.head;
+                this.head = newNode;
+            }
+            this.length++;
+            return true;
+        }
+        let newNode = new Node(val);
+        let previous = this.get(index - 1);
+        let temp = previous.next;
+        previous.next = newNode;
+        newNode.next = temp;
+        this.length++;
+        return true;
     }
 }
 
