@@ -58,7 +58,7 @@ class SinglyLinkedList{
     insert (index, val) {
         if (index < 0 || index >= this.length) return false;
         if (index === this.length) return !!this.push(val);
-        if (index === 0) {
+        if (index === 0) { // unshift
             let newNode = new Node(val);
             if (!this.head) {
                 this.head = newNode;
@@ -77,6 +77,14 @@ class SinglyLinkedList{
         newNode.next = temp;
         this.length++;
         return true;
+    }
+    set (index, val) {
+        let foundNode = this.get(index);
+        if (foundNode) {
+            foundNode.val = val
+            return true;
+        }
+        return false;
     }
 }
 
