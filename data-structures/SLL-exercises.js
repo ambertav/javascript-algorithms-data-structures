@@ -88,13 +88,17 @@ class SinglyLinkedList{
         return false;
     }
     rotate (num) {
-        let counter = 0;
+        if (num === 0 || num === this.length) return this;
 
-        // for negative num, find difference between length and num for equivalent positive integer rotator value 
-        if (num < 0) {
-            let difference = this.length + num;
-            num = difference;
-        }
+        // for num > length, use effective number of rotations (remainder of modulo)
+        if (num > this.length) num = num % this.length;
+            // if problem specifies to stop at one full rotation, can refactor to just return list as is
+
+        // for negative num, use difference between length and num for equivalent positive integer rotator value
+        // addition because num is negative 
+        if (num < 0) num = this.length + num;
+
+        let counter = 0;
 
         while (counter < num) {
             // swap head and tail
