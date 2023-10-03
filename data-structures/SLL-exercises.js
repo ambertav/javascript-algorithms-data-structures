@@ -78,6 +78,7 @@ class SinglyLinkedList{
         this.length++;
         return true;
     }
+    // implement set
     set (index, val) {
         let foundNode = this.get(index);
         if (foundNode) {
@@ -85,6 +86,25 @@ class SinglyLinkedList{
             return true;
         }
         return false;
+    }
+    rotate (num) {
+        let counter = 0;
+
+        // for negative num, find difference between length and num for equivalent positive integer rotator value 
+        if (num < 0) {
+            let difference = this.length + num;
+            num = difference;
+        }
+
+        while (counter < num) {
+            // swap head and tail
+                let node = this.head;
+                this.head = node.next;
+                this.tail.next = node;
+                this.tail = node;
+                this.tail.next = null;
+                counter++;
+        }
     }
 }
 
