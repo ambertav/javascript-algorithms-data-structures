@@ -25,7 +25,7 @@ class BinarySearchTree {
     constructor () {
         this.root = null;
     }
-    insert (value) {
+    insert (value) { // O(log n) best and average case
         const newNode = new Node(value);
         if (this.root === null) { // if no root, create and return
             this.root = newNode;
@@ -53,12 +53,37 @@ class BinarySearchTree {
             }
         }
     }
+    find (value) { // O(log n) best and average case
+        if (this.root === null) return undefined;
+        let current = this.root;
+        let found = false;
+        while (current && !found) {
+            if (value < current.value) {
+                current = current.left;
+            } else if (value > current.value) {
+                current = current.right;
+            } else {
+                found = true;
+            }
+        }
+        if (!found) return undefined;
+        return current;
+    }
+    contains (value) {
+        let doesContain = !!this.find(value); // coerce boolean value of .find()
+        return doesContain;
+    }
 }
 
-// const bts = new BinarySearchTree
-// bts.insert(10);
-// bts.insert(5);
-// bts.insert(15);
-// bts.insert(11);
-// bts.insert(3);
-// console.log(bts);
+
+
+// const bst = new BinarySearchTree
+// bst.insert(10);
+// bst.insert(5);
+// bst.insert(15);
+// bst.insert(11);
+// bst.insert(3);
+// console.log(bst);
+
+// console.log(bst.find(20));
+// console.log(bst.contains(20));
