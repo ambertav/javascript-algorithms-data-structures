@@ -51,5 +51,39 @@ function binarySearchForIndex (arr, val, isFirst) {
 }
 
 // exercise 43, divide and conquer - findRotatedIndex
+function findRotatedIndex (arr, val) {
+    // find rotation pivot index
+    const pivot = binarySearchForPivot(arr);
+
+    let index = -1;
+    if (val === arr[pivot]) return pivot;
+    else if (val < arr[0]) index = findValueIndex(pivot + 1, arr.length - 1, arr, val);
+    else if (val > arr[0]) index = findValueIndex(0, pivot - 1, arr, val);
+
+    return index;
+}
+
+function findValueIndex (left, right, arr, val) {
+    while (left <= right) {
+        let midpoint = Math.floor((right + left) / 2);
+        if (arr[midpoint] === val) return midpoint;
+        if (arr[midpoint] < val) left = midpoint + 1;
+        if (arr[midpoint] > val) right = midpoint - 1;
+    }
+    return -1
+}
+
+function findPivotIndex (arr) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left < right) {
+        let midpoint = Math.floor((left + right) / 2);
+        if (arr[midpoint] > arr[right]) left = midpoint + 1;
+        else right = midpoint;
+    }
+    return left;
+}
+
 
 // exercise 44, bubble sort
