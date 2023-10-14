@@ -99,3 +99,28 @@ function findPivotIndex (arr) {
 
 
 // exercise 44, bubble sort
+function bubbleSort(arr, comparator) {
+    if (typeof comparator !== 'function') return bubbleSort(arr, compareNumbers);
+
+    let notSwapped;
+    for (let i = arr.length; i > 0; i--) {
+        notSwapped = true;
+        for (let j = 0; j < i - 1; j++) {
+            let compValue = comparator(arr[j], arr[j + 1])
+            if (compValue > 0) {
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                notSwapped = false;
+            }
+        }
+        if (notSwapped) break;
+    }
+    return arr;
+}
+
+function compareNumbers (a, b) {
+    if (a < b) return - 1;
+    else if (a > b) return 1;
+    return 0;
+}
