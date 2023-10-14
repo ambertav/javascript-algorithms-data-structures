@@ -4,8 +4,11 @@ function countZeroes (arr) {
     let firstIndex = binarySearch(arr);
 
     if (firstIndex === -1) return 0;
+    // given that 1s in arr are at beginning, 0s are at end
+    // returns difference between length and first instance of 0
     else return arr.length - firstIndex;
 
+    // finds first instance of a 0
     function binarySearch (arr) {
         let left = 0;
         let right = arr.length - 1;
@@ -26,10 +29,13 @@ function countZeroes (arr) {
 
 // exercise 42, divide and conquer - sortedFrequency
 function sortedFrequency (arr, val) {
+
+    // find first and last instance of value
     let firstIndex = binarySearchForIndex(arr, val, true);
     if (firstIndex === -1) return -1;
     let lastIndex = binarySearchForIndex(arr, val, false);
 
+    // return difference between indexes of first and last instances of value
     return lastIndex - firstIndex + 1;
 }
 
@@ -43,6 +49,7 @@ function binarySearchForIndex (arr, val, isFirst) {
         let midpoint = Math.round((left + right) / 2);
         if (arr[midpoint] === val) {
             index = midpoint;
+            // conditional that moves pointers according to if finding first or last instance
             isFirst ? right = midpoint - 1 : left = midpoint + 1;
         } else if (arr[midpoint] < val) left = midpoint + 1;
         else right = midpoint - 1;
@@ -57,6 +64,9 @@ function findRotatedIndex (arr, val) {
 
     let index = -1;
     if (val === arr[pivot]) return pivot;
+
+    // find which side of pivot to search
+    // pass in 'left' and 'right' values of binary search
     else if (val < arr[0]) index = findValueIndex(pivot + 1, arr.length - 1, arr, val);
     else if (val > arr[0]) index = findValueIndex(0, pivot - 1, arr, val);
 
@@ -64,6 +74,8 @@ function findRotatedIndex (arr, val) {
 }
 
 function findValueIndex (left, right, arr, val) {
+    // standard binary search for value
+    // has left and right pointers passed in depending on portion of rotated array to search for value (before or after pivot)
     while (left <= right) {
         let midpoint = Math.floor((right + left) / 2);
         if (arr[midpoint] === val) return midpoint;
