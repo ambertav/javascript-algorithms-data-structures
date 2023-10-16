@@ -100,7 +100,7 @@ function findPivotIndex (arr) {
 
 // exercise 44, bubble sort
 function bubbleSort(arr, comparator) {
-    if (typeof comparator !== 'function') return bubbleSort(arr, compareNumbers);
+    if (typeof comparator !== 'function') comparator = compareNumbers;
 
     let notSwapped;
     for (let i = arr.length; i > 0; i--) {
@@ -121,7 +121,7 @@ function bubbleSort(arr, comparator) {
 
 // exercise 45, selection sort
 function selectionSort (arr, comparator) {
-    if (typeof comparator !== 'function') return selectionSort(arr, compareNumbers);
+    if (typeof comparator !== 'function') comparator = compareNumbers;
     for (let i = 0; i < arr.length; i++) {
         let min = i;
         for (let j = i + 1; j < arr.length; j++) {
@@ -198,10 +198,9 @@ class SinglyLinkedList {
     }
 }
 
-
 // exercise 47, insertion sort
 function insertionSort (arr, comparator) {
-    if (typeof comparator !== 'function') return insertionSort(arr, compareNumbers);
+    if (typeof comparator !== 'function') comparator = compareNumbers;
     for (let i = 1; i < arr.length; i++) {
         let current = arr[i];
         let j = i - 1;
@@ -212,4 +211,34 @@ function insertionSort (arr, comparator) {
         arr[j + 1] = current;
     }
     return arr;
+}
+
+// exercise 48, merge helper
+function mergeHelper (arr1, arr2, comparator) {
+    if (typeof comparator !== 'function') comparator = compareNumbers;
+    const result = [];
+    let i = 0;
+    let j = 0;
+
+    while (i < arr1.length && j < arr2.length) {
+        let compValue = comparator(arr1[i], arr2[j]);
+        if (compValue <= 0) {
+            result.push(arr1[i]);
+            i++;
+        } else {
+            result.push(arr2[j]);
+            j++;
+        }
+    }
+
+    while (i < arr1.length) {
+        result.push(arr1[i]);
+        i++;
+    }
+
+    while (j < arr2.length) {
+        result.push(arr2[j]);
+        j++;
+    }
+    return result;
 }
