@@ -119,6 +119,25 @@ function bubbleSort(arr, comparator) {
     return arr;
 }
 
+// exercise 45, selection sort
+function selectionSort (arr, comparator) {
+    if (typeof comparator !== 'function') return selectionSort(arr, compareNumbers)
+    for (let i = 0; i < arr.length; i++) {
+        let min = i;
+        for (let j = i + 1; j < arr.length; j++) {
+            let compValue = comparator(arr[min], arr[j])
+            if (compValue > 0) min = j;
+        }
+        if (min !== i) {
+            let temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp; 
+        }
+    }
+    return arr;
+}
+
+// number comparator function
 function compareNumbers (a, b) {
     if (a < b) return - 1;
     else if (a > b) return 1;
