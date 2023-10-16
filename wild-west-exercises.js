@@ -143,3 +143,57 @@ function compareNumbers (a, b) {
     else if (a > b) return 1;
     return 0;
 }
+
+
+// exercise 46, SLL remove
+class Node {
+    constructor (val){
+        this.val = val;
+        this.next = null; 
+    }
+}
+
+class SinglyLinkedList {
+    constructor (val) {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+    }
+    push (val) {
+        let newNode = new Node(val);
+        if (!this.head) {
+            this.head = newNode;
+            this.tail = this.head;
+        } else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+        this.length++;
+        return this;
+    }
+    remove (index) {
+        if (index < 0 || index >= this.length) return undefined;
+        let removedNode = null;
+        if (index === 0) {
+            removedNode = this.head;
+            this.head = this.head.next;
+        } else {
+            let counter = 0;
+            let previousNode = this.head;
+    
+            while (counter < index - 1) { // finding the node before the desired node to remove
+                previousNode = previousNode.next;
+                counter++;
+            }
+            removedNode = previousNode.next; // finds the removedNode
+            previousNode.next = removedNode.next; // linked list leaps over the removed node
+            removedNode.next = null; // removes node's attachment to linked list
+        }
+        this.length--;
+        if (this.length === 0) {
+            this.head === null;
+            this.tail === null;
+        }
+        return removedNode;
+    }
+}
