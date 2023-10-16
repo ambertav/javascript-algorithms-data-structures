@@ -214,7 +214,7 @@ function insertionSort (arr, comparator) {
 }
 
 // exercise 48, merge helper
-function mergeHelper (arr1, arr2, comparator) {
+function merge (arr1, arr2, comparator) {
     if (typeof comparator !== 'function') comparator = compareNumbers;
     const result = [];
     let i = 0;
@@ -241,4 +241,13 @@ function mergeHelper (arr1, arr2, comparator) {
         j++;
     }
     return result;
+}
+
+// exercise 49, merge sort
+function mergeSort (arr, comparator) {
+    if (arr.length <= 1) return arr;
+    let midpoint = Math.floor(arr.length / 2);
+    let left = mergeSort(arr.slice(0, midpoint), comparator);
+    let right = mergeSort(arr.slice(midpoint), comparator);
+    return merge(left, right, comparator);
 }
