@@ -97,7 +97,6 @@ function findPivotIndex (arr) {
     return left;
 }
 
-
 // exercise 44, bubble sort
 function bubbleSort(arr, comparator) {
     if (typeof comparator !== 'function') comparator = compareNumbers;
@@ -143,7 +142,6 @@ function compareNumbers (a, b) {
     else if (a > b) return 1;
     return 0;
 }
-
 
 // exercise 46, SLL remove
 class Node {
@@ -251,3 +249,46 @@ function mergeSort (arr, comparator) {
     let right = mergeSort(arr.slice(midpoint), comparator);
     return merge(left, right, comparator);
 }
+
+// exercise 50, pivot helper
+function pivot (arr, comparator, start = 0, end = arr.length - 1) {
+    if (typeof comparator !== 'function') comparator = compareNumbers;
+
+    function swap (array, i , j) {
+        let temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    let pivot = arr[start];
+    let swapIndex = start;
+
+    for (let i = start + 1; i < arr.length; i++) {
+        let compValue = comparator(pivot, arr[i]);
+        if (compValue > 0) {
+            swapIndex++;
+            swap(arr, swapIndex, i);
+        }
+    }
+
+    swap(arr, start, swapIndex);
+    return swapIndex;
+}
+
+// exercise 51, quick sort
+function quickSort (arr, comparator, left = 0, right = arr.length - 1) {
+    if (left < right) {
+        let pivotIndex = pivot(arr, comparator, left, right)
+        quickSort(arr, comparator, left, pivotIndex - 1);
+        quickSort(arr, comparator, pivotIndex + 1, right)
+    }
+    return arr;
+}
+
+// exercise 52, 
+
+// exercise 53, 
+
+// exercise 54, 
+
+// exercise 55, 
