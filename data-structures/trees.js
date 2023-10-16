@@ -3,8 +3,6 @@
 
 
 
-
-
 // binary search trees
     // similar to binary trees in that:
         // each parent node can have at most two child nodes
@@ -73,6 +71,63 @@ class BinarySearchTree {
         let doesContain = !!this.find(value); // coerce boolean value of .find()
         return doesContain;
     }
+    breadthFirstSearch () {
+        const traversedNodes = [];
+        const queue = [];
+        let node = null;
+
+        queue.push(this.root);
+
+        while (queue.length) { 
+            node = queue.shift();
+            nodeList.push(node.value);
+            // store left and right child properties in queue to keep track as push horizontal sibling nodes first
+            if (node.left) queue.push(node.left); 
+            if (node.right) queue.push(node.right);
+        }
+
+        return traversedNodes;
+    }
+    depthFirstPreOrderSearch () {
+        const traversedNodes = [];
+
+        function traverse (node) {
+            traversedNodes.push(node.value);
+            // calls to push child nodes immediately, all of left first, then all of right, before moving horizontally
+            if (node.left) traverse(node.left);
+            if (node.right) traverse(node.right);
+        }
+
+        traverse(this.root); // starts from root, can specify which node to start from
+
+        return traversedNodes;
+    }
+    depthFirstPostOrderSearch () {
+        const traversedNodes = [];
+
+        function traverse (node) {
+            if (node.left) traverse(node.left);
+            if (node.right) traverse(node.right);
+            traversedNodes.push(node.value); // push in values after exploring all of left and right (bottom to top, root is last to be pushed in)
+        }
+
+        traverse(this.root);
+
+        return traversedNodes;
+    }
+    depthFirstInOrderSearch () {
+        const traversedNodes = [];
+
+        function traverse (node) {
+            if (node.left) traverse(node.left);
+            traversedNodes.push(node.value); // visits entire left property, then node, then node's entire right property
+            if (node.right) traverse(node.right);
+        }
+
+        traverse(this.root);
+
+        return traversedNodes;
+    }
 }
 
 
@@ -87,3 +142,7 @@ class BinarySearchTree {
 
 // console.log(bst.find(20));
 // console.log(bst.contains(20));
+
+
+
+
