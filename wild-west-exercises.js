@@ -285,10 +285,175 @@ function quickSort (arr, comparator, left = 0, right = arr.length - 1) {
     return arr;
 }
 
-// exercise 52, 
+// exercise 52, radix helper to return digit in that number at given position 
+function getDigit(num, i) {
+    return Math.floor(Math.abs(num) / Math.pow(10, i)) % 10;
+}
 
-// exercise 53, 
+// exercise 53, radix helper to return number of digits in integer
+function digitCount(num) {
+    if (num === 0) return 1;
+    return Math.floor(Math.log10(Math.abs(num))) + 1;
+}
 
-// exercise 54, 
+// exercise 54, radix helper to count number of digits in integers in array
+// to determine number with most digits
+function mostDigits(nums) {
+    let maxDigits = 0;
+    for (let i = 0; i < nums.length; i++) {
+        maxDigits = Math.max(maxDigits, digitCount(nums[i]));
+    }
+    return maxDigits;
+}
 
-// exercise 55, 
+// exercise 55, radix sort
+function radixSort(nums) {
+    let maxDigitCount = mostDigits(nums);
+    for (let k = 0; k < maxDigitCount; k++) {
+        let digitBuckets = Array.from({ length: 10 }, () => []);
+        for (let i = 0; i < nums.length; i++) {
+            let digit = getDigit(nums[i], k);
+            digitBuckets[digit].push(nums[i]);
+        }
+        nums = [].concat(...digitBuckets)
+    }
+    return nums;
+}
+
+class Node {
+    constructor (value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+class Stack {
+    constructor () {
+        this.first = null;
+        this.last = null;  
+        this.size = 0;
+    }
+// exercise 56, stacks push (returns new size for stack)
+    push (val) {
+        const newNode = new Node(val);
+        if (!this.first) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            let temp = this.first;
+            this.first = newNode;
+            this.first.next = temp;
+        }
+        return ++this.size;
+    }
+// exercise 57, stacks pop (returns value of removed node)
+    pop () {
+        if (!this.first) return null;
+        const removedNode = this.first;
+        if (this.first === this.last) this.last = null;
+        this.first = this.first.next;
+        this.size--;
+        removedNode.next = null;
+        return removedNode.value;
+    }
+}
+
+// exercise 58, stack with 2 queues
+class Stack {
+    constructor () {
+        
+    }
+    push (val) {
+
+    }
+    pop () {
+
+    }
+}
+
+    // ---- QUEUE AND NODE HAVE BEEN IMPLEMENTED FOR YOU ----
+
+class Node {
+    constructor (value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+class Queue {
+    constructor () {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+    enqueue (data) {
+        var node = new Node(data);
+
+        if (!this.first) {
+            this.first = node;
+            this.last = node;
+        } else {
+            this.last.next = node;
+            this.last = node;
+        }
+
+        return ++this.size;
+    }
+
+    dequeue () {
+        if (!this.first) return null;
+
+        var temp = this.first;
+        if (this.first == this.last) {
+            this.last = null;
+        }
+        this.first = this.first.next;
+        this.size--;
+        return temp.value;
+    }
+}
+
+
+// exericse 59, queue enqueue
+class Node {
+    constructor (value) {
+        this.value = value;
+        this.next = null;      
+    }
+}
+
+class Queue {
+    constructor () {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    } 
+    enqueue (val) {
+        const newNode = new Node (val)
+        if (!this.first) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            this.last.next = newNode;
+        }
+        return ++this.size;
+    }
+}
+
+// exericse 60, binary search tree insert
+class Node {
+    constructor(value) {
+      this.value = value;
+      this.left = null;
+      this.right = null;
+    }
+  }
+  
+  class BinarySearchTree {
+    constructor() {
+      this.root = null;
+    }
+    insert(value){
+        
+    }
+  }
