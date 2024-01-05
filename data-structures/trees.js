@@ -80,7 +80,7 @@ class BinarySearchTree {
 
         while (queue.length) { 
             node = queue.shift();
-            nodeList.push(node.value);
+            traversedNodes.push(node.value);
             // store left and right child properties in queue to keep track as push horizontal sibling nodes first
             if (node.left) queue.push(node.left); 
             if (node.right) queue.push(node.right);
