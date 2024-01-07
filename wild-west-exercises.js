@@ -621,3 +621,134 @@ class BinarySearchTree {
         return getHeight(this.root) !== -1;
     }
 }
+
+class MaxBinaryHeap {
+    constructor () {
+        this.values = [];    
+    }
+// exercise 67, binary heap insert
+    insert (val) {
+        this.values.push(val);
+        this.bubbleUp();
+    }
+    bubbleUp () {
+        let index = this.values.length - 1;
+        const element = this.values[index];
+        while (index > 0) {
+            let parentIndex = Math.floor((index - 1) / 2);
+            let parent = this.values[parentIndex];
+            if (element <= parent) break;
+            else {
+                this.values[parentIndex] = element;
+                this.values[index] = parent;
+                index = parentIndex;
+            }
+        }
+    }
+// exercise 68, binary heap extractMax
+    extractMax () {
+        const max = this.values[0];
+        const end = this.values.pop();
+        if (this.values.length > 0) {
+            this.values[0] = end;
+            this.bubbleDown();
+        }
+        return max;
+    }
+    bubbleDown () {
+        let index = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+        while (true) {
+            let leftIndex = 2 * index + 1;
+            let rightIndex = 2 * index + 2;
+            let leftChild, rightChild;
+            let swap = null;
+
+            if (leftIndex < length) {
+                leftChild = this.values[leftIndex];
+                if (leftChild > element) swap = leftIndex;
+            }
+
+            if (rightIndex < length) {
+                rightChild = this.values[rightIndex];
+                if ((swap === null && rightChild > element) || (swap !== null && rightChild > leftChild)) swap = rightIndex;
+            }
+
+            if (swap === null) break;
+    
+            this.values[index] = this.values[swap];
+            this.values[swap] = element;
+            index = swap;
+        }
+    }
+}
+
+class Graph {
+    constructor () {
+        this.adjacencyList = {};
+    }
+// exercise 69, graphs add vertex
+    addVertex (vertex) {
+        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    }
+// exercise 73, graphs add edge
+    addEdge (vertexOne, vertexTwo) {
+        this.adjacencyList[vertexOne].push(vertexTwo);
+        this.adjacencyList[vertexTwo].push(vertexOne);
+    }
+// exercise 70, graphs remove edge
+    removeEdge (vertexOne, vertexTwo) {
+        this.adjacencyList[vertexOne] = this.adjacencyList[vertexOne].filter(v => v !== vertexTwo);
+        this.adjacencyList[vertexTwo] = this.adjacencyList[vertexTwo].filter(v => v !== vertexOne);
+    }
+// exercise 71, graphs remove vertex
+    removeVertex (vertex) {
+        while (this.adjacencyList[vertex].length) {
+            const adjacentVertex = this.adjacencyList[vertex].pop();
+            this.removeEdge(vertex, adjacentVertex);
+        }
+        delete this.adjacencyList[vertex];
+    }
+// exercise 72, graphs depth first search
+    depthFirstSearch (start) { // recursive
+        const result = [];
+        const visited = {};
+        const adjacencyList = this.adjacencyList;
+
+        function DFSHelper (vertex) {
+            if (!vertex) return null;
+            visited[vertex] = true;
+            result.push(vertex);
+            adjacencyList[vertex].forEach(neighbor => {
+                if (!visited[neighbor]) return DFSHelper(neighbor);
+            });
+        }
+
+        DFSHelper(start);
+
+        return result;
+    }
+// exercise 74, graphs breadth first search
+    breadthFirstSearch (start) {
+        const queue = [start];
+        const result = [];
+        const visited = { [start]: true }
+
+        let currentVertex;
+
+        while (queue.length) {
+            currentVertex = queue.shift();
+            result.push(currentVertex);
+
+            this.adjacencyList[currentVertex].forEach(neighbor => {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.push(neighbor);
+                }
+            });
+        }
+
+        return result;
+    }
+}
