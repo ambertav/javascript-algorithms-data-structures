@@ -363,10 +363,41 @@ class Stack {
 
 // exercise 58, stack with 2 queues
 class Stack {
-    constructor() {}
-    push(val) {}
-    pop() {}
+    constructor () {
+        // initialize two queues within constructor
+        this.queueOne = new Queue();
+        this.queueTwo = new Queue();
+    }
+
+    push (val) {
+        // create node
+        const newNode = new Node(val);
+
+        // push node into second queue
+        this.queueTwo.enqueue(newNode);
+
+        // push all nodes in first queue into second queue
+        while (this.queueOne.first !== null) {
+            this.queueTwo.enqueue(this.queueOne.dequeue());
+        }
+
+        // swap the queues
+        const temp = this.queueOne;
+        this.queueOne = this.queueTwo;
+        this.queueTwo = temp;
+        
+        // return stack
+        return this;
+    }
+    pop() {
+        // if no nodes in first queue, return null
+        if (!this.queueOne.first) return null;
+        
+        // else return the dequeue of first queue
+        else return this.queueOne.dequeue().value;
+    }
 }
+
 
 // ---- QUEUE AND NODE HAVE BEEN IMPLEMENTED FOR YOU ----
 
@@ -752,3 +783,25 @@ class Graph {
         return result;
     }
 }
+
+// exercise 75, dijkstra exercise
+
+// exercise 76, dynamic programming coin change
+
+// exercise 77, coin change greedy algorithm
+
+// exercise 78, frequency counter constructNote
+
+// exercise 79, frequency counter findAllDuplicates
+
+// exercise 80, frequency counter / multiple pointer findPair
+
+// exercise 81, trie add word
+
+// exercise 82, trie remove word
+
+// exercise 83, trie findWords
+
+// exercise 84, trie getWords
+
+// exercise 85, trie autocomplete
