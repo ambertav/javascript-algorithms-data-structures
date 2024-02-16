@@ -901,6 +901,18 @@ class PriorityQueue {
 }
 
 // exercise 76, dynamic programming coin change
+function coinChange(denominations, value) {
+    const dp = new Array(value + 1).fill(0);
+    dp[0] = 1;
+
+    for (let coin of denominations) {
+        for (let i = coin; i <= value; i++) {
+            dp[i] += dp[i - coin];
+        }
+    }
+
+    return dp[value];
+}
 
 // exercise 77, coin change greedy algorithm
 
