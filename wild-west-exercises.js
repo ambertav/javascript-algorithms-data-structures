@@ -929,8 +929,50 @@ function minCoinChange (coins, amount) {
 }
 
 // exercise 78, frequency counter constructNote
+function constructNote (message, letters) {
+
+    // initialize objects to store letter and frequency of each letter for both strings
+    const messageFreq = {};
+    const lettersFreq = {};
+
+    // construct freq counter for message string 
+    for (let letter of message) {
+        messageFreq[letter] = (messageFreq[letter] || 0) + 1;
+    }
+
+    // construct freq counter for letters string
+    for (let letter of letters) {
+        lettersFreq[letter] = (lettersFreq[letter] || 0) + 1;
+    }
+
+    // ensure that each letter in message string is present within letters string
+    for (let key in messageFreq) {
+        // if not present, or not present in correct quantity (extra is okay), return false
+        if (!(key in lettersFreq) || messageFreq[key] > lettersFreq[key]) return false
+    }
+
+    return true;
+}
 
 // exercise 79, frequency counter findAllDuplicates
+function findAllDuplicates (array) {
+    // initialize return variable and freq counter object
+    const result = [];
+    const frequencyCounter = {};
+
+    // count freq of each integer in array
+    for (let integer of array) {
+        frequencyCounter[integer] = (frequencyCounter[integer] || 0) + 1;
+    }
+
+    // loop through freq counter, push in any integer that was counted twice
+    for (let integerKey in frequencyCounter) {
+        // object keys are strings, so convert back to integer 
+        if (frequencyCounter[integerKey] === 2) result.push(Number(integerKey));
+    }
+
+    return result;
+}
 
 // exercise 80, frequency counter / multiple pointer findPair
 
