@@ -975,6 +975,33 @@ function findAllDuplicates (array) {
 }
 
 // exercise 80, frequency counter / multiple pointer findPair
+function findPair(array, number) {
+    
+    // input is unsorted, so sort array
+    array.sort((a, b) => a - b);
+
+    // initialize pointers
+    let left = 0;
+    let right = 1;
+
+    while (right < array.length) {
+        // find difference
+        let difference = array[right] - array[left];
+
+        // compare absolute values of difference and target n
+        // if match, return true (pair found)
+        if (Math.abs(difference) === Math.abs(number)) return true;
+
+        // if difference is less than target or pointers are in same position, increment right pointer
+        else if (difference < number || left === right) right++;
+
+        // else increment left pointer
+        else left++;
+    }
+
+    // if no match after loop, return false (pair not found)
+    return false;
+}
 
 // exercise 81, trie add word
 
