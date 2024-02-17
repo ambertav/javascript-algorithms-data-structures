@@ -915,6 +915,18 @@ function coinChange(denominations, value) {
 }
 
 // exercise 77, coin change greedy algorithm
+function minCoinChange (coins, amount) {
+    const result = [];
+
+    for(let i = coins.length -1; i >= 0; i--) {
+        while (amount >= coins[i]) {
+            amount -= coins[i];
+            result.push(coins[i]);
+        }
+    }
+
+    return result;
+}
 
 // exercise 78, frequency counter constructNote
 
