@@ -976,7 +976,7 @@ function findAllDuplicates (array) {
 
 // exercise 80, frequency counter / multiple pointer findPair
 function findPair(array, number) {
-    
+
     // input is unsorted, so sort array
     array.sort((a, b) => a - b);
 
@@ -1003,12 +1003,88 @@ function findPair(array, number) {
     return false;
 }
 
-// exercise 81, trie add word
+class Trie {
+    constructor () {
+        this.characters = {};
+        this.isWord = false;
+    }
+    // exercise 81, trie add word
+    addWord (word, index = 0) {
+        // base case: if at end of word, mark as a complete word
+        if (index === word.length) return this.isWord = true;
 
-// exercise 82, trie remove word
+        // extract char at current index
+        const char = word[index];
 
-// exercise 83, trie findWords
+        // creating subtrie
+        if (!this.characters[char]) this.characters[char] = new Trie();
 
-// exercise 84, trie getWords
+        // recursive call, moves on to next char
+        this.characters[char].addWord(word, index + 1);
+    }
+    // exercise 82, trie remove word
+    removeWord (word, index = 0) {
+        // base case: if at end of word, unmark as isWord
+        if (index === word.length) {
+            this.isWord = false;
 
-// exercise 85, trie autocomplete
+            // return whether node has children
+            return Object.keys(this.characters).length === 0;
+        }
+
+        // extract char at current index
+        const char = word[index];
+
+        // if char not in trie, return false
+        if (!this.characters[char]) return false;
+
+        // recursive call from next char
+        const shouldRemoveNode = this.characters[char].removeWord(word, index + 1);
+
+        // if should remove,
+        if (shouldRemoveNode) {
+            // delete node
+            delete this.characters[char];
+            // return whether node has children
+            return Object.keys(this.characters).length === 0;
+        }
+
+        // return false if word wasn't found
+        return false;
+    }
+    // exercise 83, trie findWords
+    findWord (word, index = 0) {
+        // extract char at current index
+        const char = word[index];
+
+        // if not at end of word and the char exists, recursive call to continue searching through
+        if (index < word.length - 1 && this.characters[char]) return this.characters[char].findWord(word, index + 1);
+        // otherwise, return the word if it exists and if not, return undefined
+        else return this.characters[char] ? this.characters[char] : undefined;
+    }
+    // exercise 84, trie getWords
+    getWords (words = [], currentWord = '') {
+        // if the current word is a complete word, add to array of words
+        if (this.isWord) words.push(currentWord);
+
+        // recursive call to traverse all child nodes
+        for (let char in this.characters) {
+            const nextWord = currentWord + char;
+            this.characters[char].getWords(words, nextWord);
+        }
+
+        // return array of words
+        return words;
+    }
+    // exercise 85, trie autocomplete
+    autocomplete (prefix) {
+        // find the node that corresponds to the inputted prefix
+        const nodeAtPrefix = this.findWord(prefix);
+        // if it doesn't exist, return empty array
+        if (!nodeAtPrefix) return [];
+
+        // otherwise, return and get all words from node at prefix
+        // concatenate with prefix to complete
+        return nodeAtPrefix.getWords().map(word => prefix + word);
+    }
+}
